@@ -35,7 +35,7 @@ namespace MoviePlex
             Console.Clear();
             PrintApplicationTitle();
             PrintApplicationOptions();
-            
+
             while (true)
             {
                 userRoleSelection = Console.ReadLine();
@@ -43,7 +43,7 @@ namespace MoviePlex
                 if (!UtilityFunctions.IsNumber(userRoleSelection))
                 {
                     Console.Clear();
-                    
+
                     PrintApplicationTitle();
                     PrintErrorMsg("Please enter valid input!");
                     PrintApplicationOptions();
@@ -66,9 +66,15 @@ namespace MoviePlex
             }
         }
 
+        public static void RestartApplication()
+        {
+            MovieOperations.ClearMovies();
+            StartApplication();
+        }
+
         public static bool IsNumber(string value)
         {
-            return int.TryParse(value, out _);
+            return (!string.IsNullOrWhiteSpace(value) && int.TryParse(value, out _)) ? true : false;
         }
     }
 }
