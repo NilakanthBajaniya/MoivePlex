@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MoviePlex
 {
@@ -14,6 +15,7 @@ namespace MoviePlex
             {"NC-17", 16 }
         };
 
+        public int MovieId { get; set; }
         public string Name { get; set; }
         public int? AgeLimit { get; set; }
         public string Rating { get; set; }
@@ -29,10 +31,18 @@ namespace MoviePlex
     public static class MovieOperations
     {
         static List<Movie> applicationMovies = new List<Movie>();
+
+        public static Movie? ReadMovieById(int movieId)
+        {
+            var movie = applicationMovies.Where(x => x.MovieId == movieId).FirstOrDefault();
+
+            return movie;
+        }
         public static void AddMovie(MovieViewModel movie)
         {
             var newMovie = new Movie();
 
+            newMovie.MovieId = applicationMovies.Count + 1;
             newMovie.Name = movie.Name;
 
             if (UtilityFunctions.IsNumber(movie.Restriction))
@@ -56,12 +66,16 @@ namespace MoviePlex
 
             for (int i = 0; i < applicationMovies.Count; i++)
             {
-                string printString = (i + 1) + ". " +  applicationMovies[i].Name +  
-                    (applicationMovies[i].AgeLimit.HasValue ? Convert.ToString(applicationMovies[i].AgeLimit.Value) : applicationMovies[i].Rating);
+                string printString = (applicationMovies[i].MovieId) + ". " + applicationMovies[i].Name + " {" + 
+                    (applicationMovies[i].AgeLimit.HasValue ? Convert.ToString(applicationMovies[i].AgeLimit.Value) : applicationMovies[i].Rating) + "}";
 
                 Console.WriteLine(printString);
             }
 
+        }
+        public static int AvailableMovieCount()
+        {
+            return applicationMovies.Count;
         }
     }
 }

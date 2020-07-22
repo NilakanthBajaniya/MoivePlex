@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MoviePlex
 {
@@ -60,9 +61,16 @@ namespace MoviePlex
             {
                 Administrator.ValidateAdmin();
             }
+            else if (Convert.ToInt32(userRoleSelection) == 2)
+            {
+                User.InitGuest();
+            }
             else
             {
+                PrintErrorMsg("Please enter valid input!");
+                Task.Delay(2000);
 
+                StartApplication();
             }
         }
 

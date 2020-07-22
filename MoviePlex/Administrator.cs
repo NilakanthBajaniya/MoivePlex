@@ -24,8 +24,9 @@ namespace MoviePlex
             if (!string.IsNullOrWhiteSpace(movieName) && !string.IsNullOrWhiteSpace(rating))
             {
                 movie.Name = movieName;
-                if(UtilityFunctions.IsNumber(rating) || Movie.MovieRating.ContainsKey(rating))
+                if((UtilityFunctions.IsNumber(rating) && Convert.ToInt32(rating) > 0 && Convert.ToInt32(rating) < 100) || Movie.MovieRating.ContainsKey(rating))
                 {
+                    
                     movie.Restriction = rating;
                 }
 
