@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 
 namespace MoviePlex
 {
@@ -43,13 +40,18 @@ namespace MoviePlex
 
             if (MovieOperations.AvailableMovieCount() == 0)
             {
-                UtilityFunctions.PrintErrorMsg("No Movies Right now. Please check later!!");
+                UtilityFunctions.PrintErrorMsg("No Movies Right now. Please check later!! \nPRESS ANY KEY TO RETURN TO MAIN MENU.");
+
+                ConsoleKeyInfo keyInfo;
+
+                keyInfo = Console.ReadKey();
+                UtilityFunctions.RestartApplication();
                 return;
             }
 
             while (true)
             {
-                Console.Write("Which movie would you like to Watch ?");
+                Console.Write("Which movie would you like to Watch? ");
                 var choice = Console.ReadLine();
 
                 Console.WriteLine();
@@ -69,12 +71,12 @@ namespace MoviePlex
 
                             string finalChoice = Console.ReadLine();
 
-                            if(finalChoice.ToUpper().Equals("M"))
+                            if (finalChoice.ToUpper().Equals("M"))
                             {
                                 Console.Clear();
                                 MovieOperations.DisplayMovies();
                             }
-                            else if(finalChoice.ToUpper().Equals("S"))
+                            else if (finalChoice.ToUpper().Equals("S"))
                             {
                                 UtilityFunctions.RestartApplication();
                             }
@@ -85,6 +87,7 @@ namespace MoviePlex
                         }
                         else
                         {
+                            UtilityFunctions.PrintErrorMsg("You are under age to watch this movie. Please select another!");
                             continue;
                         }
                     }

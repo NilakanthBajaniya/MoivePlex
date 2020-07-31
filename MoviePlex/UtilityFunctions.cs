@@ -7,6 +7,15 @@ namespace MoviePlex
     {
         static String userRoleSelection = "";
 
+        public static void PrintInfoMsg(string msg)
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(msg);
+
+            Console.ResetColor();
+        }
+
         public static void PrintApplicationTitle()
         {
 
@@ -67,9 +76,10 @@ namespace MoviePlex
             }
             else
             {
-                PrintErrorMsg("Please enter valid input!");
-                Task.Delay(2000);
+                PrintErrorMsg("Please enter valid input! \nPRESS ANY KEY TO RETURN TO MAIN MENU.");
 
+                ConsoleKeyInfo keyInfo;
+                keyInfo = Console.ReadKey();
                 StartApplication();
             }
         }

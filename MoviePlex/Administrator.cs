@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Dynamic;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
 
 namespace MoviePlex
 {
@@ -28,10 +26,16 @@ namespace MoviePlex
                 {
 
                     movie.Restriction = rating;
+                    MovieOperations.AddMovie(movie);
+                    return ++movieCounter;
+                }
+                else
+                {
+                    UtilityFunctions.PrintErrorMsg("Please enter valid age or rating!! ");
+                    UtilityFunctions.PrintInfoMsg($"Age can be between 1 to 100 and Rating can be from {string.Join(',', Movie.MovieRating.Keys.ToList())}");
                 }
 
-                MovieOperations.AddMovie(movie);
-                return ++movieCounter;
+                return movieCounter;
             }
             else
             {
