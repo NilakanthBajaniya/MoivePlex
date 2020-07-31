@@ -13,7 +13,7 @@ namespace MoviePlex
         static int ReadMovieDetails(int movieCounter)
         {
             var movie = new MovieViewModel();
-            string movieName, rating ;
+            string movieName, rating;
 
             Console.WriteLine($"Please Enter {GetNumberInWord(movieCounter + 1)} movie's name:");
             movieName = Console.ReadLine();
@@ -24,9 +24,9 @@ namespace MoviePlex
             if (!string.IsNullOrWhiteSpace(movieName) && !string.IsNullOrWhiteSpace(rating))
             {
                 movie.Name = movieName;
-                if((UtilityFunctions.IsNumber(rating) && Convert.ToInt32(rating) > 0 && Convert.ToInt32(rating) < 100) || Movie.MovieRating.ContainsKey(rating))
+                if ((UtilityFunctions.IsNumber(rating) && Convert.ToInt32(rating) > 0 && Convert.ToInt32(rating) < 100) || Movie.MovieRating.ContainsKey(rating))
                 {
-                    
+
                     movie.Restriction = rating;
                 }
 
@@ -35,7 +35,7 @@ namespace MoviePlex
             }
             else
             {
-                UtilityFunctions.PrintErrorMsg("Movie Name and Age can not be empty!!");
+                UtilityFunctions.PrintErrorMsg("Movie Name or Age can not be empty!!");
                 return movieCounter;
             }
         }
@@ -71,7 +71,7 @@ namespace MoviePlex
         static void InsertMovies()
         {
 
-            Console.WriteLine("Howmany movies are playing today? (No more than 10) ");
+            Console.WriteLine("How many movies are playing today? (No more than 10) ");
             string noOfMoviePlaying = Console.ReadLine();
 
             if (!string.IsNullOrWhiteSpace(noOfMoviePlaying) && UtilityFunctions.IsNumber(noOfMoviePlaying) && Convert.ToInt32(noOfMoviePlaying) <= maxMovies)
@@ -83,19 +83,27 @@ namespace MoviePlex
                     movieCounter = ReadMovieDetails(movieCounter);
                 }
 
+            askAgain:
+
                 MovieOperations.DisplayMovies();
                 Console.WriteLine("Your movies playing today are listed as above! Are you satisfied? (Y/N)? ");
 
+
                 var userSelection = Console.ReadLine();
 
-                if(userSelection.ToUpper() == "Y")
+                if (userSelection.ToUpper() == "Y")
                 {
                     UtilityFunctions.StartApplication();
                 }
-                else
+                else if (userSelection.ToUpper() == "N")
                 {
                     MovieOperations.ClearMovies();
                     InsertMovies();
+                }
+                else
+                {
+                    UtilityFunctions.PrintErrorMsg("Please enter valid input!! \n");
+                    goto askAgain;
                 }
             }
             else
